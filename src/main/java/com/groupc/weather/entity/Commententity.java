@@ -32,7 +32,7 @@ public class CommentEntity {
         this.userImageProfileUrl =dto.getUserImageProfileUrl();
         this.userNickname = dto.();
         this.boardNumber = dto.getBoardNumber();
-        this.userNumber = dto.getWriterNumber();
+        this.userNumber2 = dto.getWriterNumber();
         this.commentContent = dto.getCommentContent();
         this.writeDatetime = writeDatetime;
 }
