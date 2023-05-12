@@ -10,6 +10,7 @@ import com.groupc.weather.dto.request.common.UserDto;
 import com.groupc.weather.dto.request.qnaBoard.PatchQnaCommentRequestDto;
 import com.groupc.weather.dto.request.qnaBoard.PostQnaCommentRequestDto;
 import com.groupc.weather.entity.ManagerEntity;
+import com.groupc.weather.entity.QnaBoardEntity;
 import com.groupc.weather.entity.QnaCommentEntity;
 import com.groupc.weather.entity.UserEntity;
 import com.groupc.weather.repository.ManagerRepository;
@@ -42,6 +43,7 @@ public class QnaCommentServiceImplement implements QnaCommentService {
         int qnaBoardWriterNumber = qnaBoardRepsitory.findByQnaBoardNumber(dto.getQnaBoardNumber()).getUserNumber();
 
         try {
+            
             boolean existedWriterManagerNumber = managerRepository.existsbyManagerNumber(qnaBoardWriterNumber);
             boolean existedWriterUserNumber = userRepositry.existsbyUserNumber(qnaBoardWriterNumber);
             boolean existedQnaBoardNumber = qnaBoardRepsitory.existsByQnaBoardNumber(qnaBoardNumber);
@@ -77,6 +79,8 @@ public class QnaCommentServiceImplement implements QnaCommentService {
             managerDto.setManagerNickname(managerEntity.getNickname());
             managerDto.setManagerProfileImageUrl(managerEntity.getProfileImageUrl());
             QnaCommentEntity qnaCommentEntity = new QnaCommentEntity(dto, managerDto);
+
+
             qnaCommentRepository.save(qnaCommentEntity);
 
             // TODO:
@@ -102,7 +106,7 @@ public class QnaCommentServiceImplement implements QnaCommentService {
         int qnaCommentWriterNumber = qnaCommentRepository.findByQnaCommentNumber(dto.getQnaCommentNumber()).getUserNumber();
         // qna 댓글 보드 특정
         int qnaBoardNumber = dto.getQnaBoardNumber();
-
+        QnaBoardEntity qnaBoardEntity = qnaBoardRepository.findByQnaBoardNumber(qnaBoardNumber);
 
     
         // 유저일때랑 관리자일때랑 나눠서 진행
@@ -130,28 +134,24 @@ public class QnaCommentServiceImplement implements QnaCommentService {
             //TODO : 댓글 작성자와 수정자가 같을때
 
             if(!(qnaCommentPatcherNumber == qnaCommentWriterNumber)){
-                    return CustomResponse.noPermissions();
+                    return CustomResponse.noPermissions(); }
                 
             qnaCommentEntity.setContent(dto.getQnaCommentContent());
+            //qnaBoardEntity.setReplyComplete(true);
             qnaCommentRepository.save(qnaCommentEntity);
                 
-            }        
+                   
         } catch (Exception exception) {
             exception.printStackTrace();
-            return CustomResponse.databaseError()
+            return CustomResponse.databaseError();
         }
 
-
+        return CustomResponse.success();
     }
 
 
 
 
-    @Override
-    public ResponseEntity<ResponseDto> getQnaComment(Integer qnaBoardNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQnaComment'");
-    }
 
     // 댓글 삭제
     @Override
