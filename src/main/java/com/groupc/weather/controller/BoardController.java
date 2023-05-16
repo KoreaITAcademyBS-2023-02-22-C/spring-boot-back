@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.groupc.weather.dto.response.board.GetBoardFirstViewDto;
 import com.groupc.weather.dto.response.board.GetBoardListResponseDto;
 import com.groupc.weather.dto.response.board.GetBoardResponseDto;
 import com.groupc.weather.dto.ResponseDto;
@@ -66,12 +68,12 @@ public class BoardController {
     }
 
     // 6. 첫화면 일반 게시물 목록
-    @GetMapping("/firstImage")
-    public ResponseEntity<? super GetBoardFirstViewDto> getBoardFirstView(){
-        ResponseEntity<? super GetBoardFirstViewDto> response = boardService.getBoardList();
-        return response;
+    // @GetMapping("/firstImage")
+    // public ResponseEntity<? super GetBoardFirstViewDto> getBoardFirstView(){
+    //     ResponseEntity<? super GetBoardFirstViewDto> response = boardService.getBoardList();
+    //     return response;
 
-    }
+    // }
 
     // 7. 특정 게시물 수정
     @PatchMapping("")

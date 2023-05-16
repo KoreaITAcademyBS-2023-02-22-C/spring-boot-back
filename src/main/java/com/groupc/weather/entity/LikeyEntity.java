@@ -22,8 +22,6 @@ public class LikeyEntity {
     private int boardNumber;     
     @Id
     private int userNumber;
-    private String userEmail;
-    private String userNickname;
-    private String userProfileImageUrl;
+
 }
 

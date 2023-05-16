@@ -62,31 +62,31 @@ public class BoardServiceImplement implements BoardService {
     public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
         GetBoardResponseDto body = null;
 
-        try {
-            // 매게변수 오류
-            if (boardNumber == null)
-                return CustomResponse.validationError();
+        // try {
+        //     // 매게변수 오류
+        //     if (boardNumber == null)
+        //         return CustomResponse.validationError();
 
-            // 존재하지 않는 게시물 번호
-            if (boardNumber == null)
-                return CustomResponse.notExistBoardNumber();
+        //     // 존재하지 않는 게시물 번호
+        //     if (boardNumber == null)
+        //         return CustomResponse.notExistBoardNumber();
 
-            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
-            int viewCount = boardEntity.getViewCount();
-            boardEntity.setViewCount(++viewCount);
-            Integer boardWriterNumber = boardEntity.getUserNumber();
-            UserEntity userEntity = userRepository.findByUserNumber(boardWriterNumber);
-            List<LikeyEntity> likeyEntities = likeyRepository.findByBoardNumber(boardNumber);
-            List<CommentEntity> commentEntities = commentRepository.findByBoardNumber(boardNumber);
-            List<HashListEntity> hashListEntities = hashTageRepository.findByBoardNumber(boardNumber);
-            List<ImageUrlEntity> imageUrlEntities = imageUrlRepository.findByBoardNumber(boardNumber);
-            body = new GetBoardResponseDto(boardEntity, userEntity, likeyEntities, commentEntities, hashListEntities,
-                    imageUrlEntities);
+        //     BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+        //     int viewCount = boardEntity.getViewCount();
+        //     boardEntity.setViewCount(++viewCount);
+        //     Integer boardWriterNumber = boardEntity.getUserNumber();
+        //     UserEntity userEntity = userRepository.findByUserNumber(boardWriterNumber);
+        //     List<LikeyEntity> likeyEntities = likeyRepository.findByBoardNumber(boardNumber);
+        //     List<CommentEntity> commentEntities = commentRepository.findByBoardNumber(boardNumber);
+        //     List<HashListEntity> hashListEntities = hashTageRepository.findByBoardNumber(boardNumber);
+        //     List<ImageUrlEntity> imageUrlEntities = imageUrlRepository.findByBoardNumber(boardNumber);
+        //     body = new GetBoardResponseDto(boardEntity, userEntity, likeyEntities, commentEntities, hashListEntities,
+        //             imageUrlEntities);
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return CustomResponse.databaseError();
-        }
+        // } catch (Exception exception) {
+        //     exception.printStackTrace();
+        //     return CustomResponse.databaseError();
+        // }
         return CustomResponse.success();
     }
 
@@ -132,7 +132,7 @@ public class BoardServiceImplement implements BoardService {
 
         try {
 
-            List<GetBoardListResult> resultSet = boardRepository.findByBoardWriterNumber(userNumber);
+            List<GetBoardListResult> resultSet = boardRepository.findByUserNumber(userNumber);
             System.out.println(resultSet.size());
             body = new GetBoardListResponseDto(resultSet);
         } catch (Exception exception) {
@@ -203,7 +203,7 @@ public class BoardServiceImplement implements BoardService {
                 return CustomResponse.noPermissions();
 
             commentRepository.deleteByBoardNumber(boardNumber);
-            likeyRepository.deleteByBoardNumber(boardNumber);
+            //likeyRepository.deleteByBoardNumber(boardNumber);
             boardRepository.delete(boardEntity);
 
         } catch (Exception exception) {
@@ -216,16 +216,28 @@ public class BoardServiceImplement implements BoardService {
     //첫화면 게시물 8개 보기
     @Override
     public ResponseEntity<? super GetBoardFirstViewDto> getBoardFirstView() {
-        GetBoardListResponseDto body = null;
-        try {
-            List<GetBoardListResult> resultSet = boardRepository.getBoardFirstView();
-            System.out.println(resultSet.size());
-            body = new GetBoardListResponseDto(resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return CustomResponse.databaseError();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+    //     GetBoardListResponseDto body = null;
+    //     try {
+    //         List<GetBoardListResult> resultSet = boardRepository.getBoardFirstView();
+    //         System.out.println(resultSet.size());
+    //         body = new GetBoardListResponseDto(resultSet);
+    //     } catch (Exception exception) {
+    //         exception.printStackTrace();
+    //         return CustomResponse.databaseError();
+    //     }
+        return ResponseEntity.status(HttpStatus.OK).body("dd"); //주석처리
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardListResponseDto> getSearchListByWord() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSearchListByWord'");
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardListResponseDto> getSearchListByHashtag() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSearchListByHashtag'");
     }
 
     // 특정 게시물 좋아요 등록

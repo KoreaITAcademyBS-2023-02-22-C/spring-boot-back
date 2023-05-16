@@ -1,7 +1,5 @@
 package com.groupc.weather.dto.request.user;
 
-import java.sql.Date;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -32,5 +30,5 @@ public class PatchUserRequestDto {
     @NotBlank
     private String userGender;
     @NotBlank
-    private Date userBirhDay;
+    private String userBirhDay;
 }

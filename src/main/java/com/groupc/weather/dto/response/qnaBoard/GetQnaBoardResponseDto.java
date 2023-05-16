@@ -39,7 +39,7 @@ public class GetQnaBoardResponseDto extends ResponseDto {
         this.content = qnaBoardEntity.getContent();
         this.imageUrl = qnaBoardEntity.getImageUrl();
         this.writeDatetime = qnaBoardEntity.getWriteDatetime();
-        this.userNickname = userEntity.getUserNickname();
+        this.userNickname = userEntity.getNickname();
         this.userProfileImageUrl = userEntity.getProfileImageUrl();
         this.commentList = Comment.createList(qnaCommentEntities);
     }
@@ -63,7 +63,7 @@ class Comment {
 
     Comment(QnaCommentEntity qnaCommentEntity) {
         this.qnaCommentNumber = qnaCommentEntity.getQnaCommentNumber();
-        this.qnaBoardNumber = qnaCommentEntity.getQnaboardNumber();
+        this.qnaBoardNumber = qnaCommentEntity.getQnaBoardNumber();
         this.userNumber = qnaCommentEntity.getUserNumber();
         this.managerNumber = qnaCommentEntity.getManagerNumber();
         this.userProfileImageUrl = qnaCommentEntity.getUserImageProfileUrl();

@@ -49,7 +49,7 @@ public class GetBoardResponseDto extends ResponseDto {
         this.weatherInfo = photoBoardEntity.getWeatherInfo();
         this.temperature = photoBoardEntity.getTemperature();
         this.viewCount = photoBoardEntity.getViewCount();
-        this.boardWriterNickname = userEntity.getUserNickname();
+        this.boardWriterNickname = userEntity.getNickname();
         this.boardWriterProfileImageUrl = userEntity.getProfileImageUrl();
         this.commentCount = commentList.size();
         this.likeCount = likyEntities.size();
@@ -102,8 +102,8 @@ class Liky {
     Liky(LikeyEntity likyEntity) {
         this.boardNumber = likyEntity.getBoardNumber();
         this.userNumber = likyEntity.getUserNumber();
-        this.userNickname = likyEntity.getUserNickname();
-        this.userProfileImageUrl = likyEntity.getUserProfileImageUrl();
+        //this.userNickname = likyEntity.getUserNickname();
+        //this.userProfileImageUrl = likyEntity.getUserProfileImageUrl();
     }
 
     static List<Liky> createList(List<LikeyEntity> likyEntities) {
@@ -152,7 +152,7 @@ class HashTag {
     private int boardNumber;
    
     HashTag( HashListEntity hashListEntity){
-        this.hashtagContent = hashListEntity.getHashtagContent();
+        //this.hashtagContent = hashListEntity.getHashtagContent();
         this.hashtagNumber = hashListEntity.getHashtagNumber(); // 어떻게 사용할지 모르겠음...
         this.boardNumber = hashListEntity.getBoardNumber();
     }

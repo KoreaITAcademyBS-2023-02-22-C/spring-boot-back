@@ -3,9 +3,11 @@ package com.groupc.weather.entity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.groupc.weather.dto.request.common.ManagerDto;
 import com.groupc.weather.dto.request.common.UserDto;
@@ -18,13 +20,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Entity(name="QnaComment")
+@Table(name="Qna_Comment")
 public class QnaCommentEntity {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int qnaCommentNumber;
-        private int qnaboardNumber;
+        private int qnaBoardNumber;
         private String content;
         private String writeDatetime;
         private Integer userNumber;
@@ -40,7 +43,7 @@ public class QnaCommentEntity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");//시간 데이터 타입 형태 설정
         String writeDatetime = simpleDateFormat.format(now);//형태안에 데이터타입 변수 넣음
 
-        this.qnaboardNumber=dto.getQnaBoardNumber();
+        this.qnaBoardNumber=dto.getQnaBoardNumber();
         this.content=dto.getQnaCommentContent();
         this.writeDatetime=writeDatetime;
         this.userNumber=dto.getWriterNumber();
@@ -56,7 +59,7 @@ public class QnaCommentEntity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");//시간 데이터 타입 형태 설정
                 String writeDatetime = simpleDateFormat.format(now);//형태안에 데이터타입 변수 넣음
         
-                this.qnaboardNumber=dto.getQnaBoardNumber();
+                this.qnaBoardNumber=dto.getQnaBoardNumber();
                 this.content=dto.getQnaCommentContent();
                 this.writeDatetime=writeDatetime;
                 this.userNumber=null;

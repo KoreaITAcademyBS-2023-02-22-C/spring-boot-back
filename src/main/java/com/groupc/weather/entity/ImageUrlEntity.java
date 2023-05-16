@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Image_Url")
+@Entity(name = "ImageUrl")
 @Table(name = "Image_Url")
 public class ImageUrlEntity {
     

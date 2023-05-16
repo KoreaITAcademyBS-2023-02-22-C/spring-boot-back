@@ -70,7 +70,7 @@ public class UserServiceImplement implements UserService {
             dto.setUserPassword(encodedPassword);
 
             // 유저 레코드 삽입
-            UserEntity userEntity = new UserEntity(dto);
+            UserEntity userEntity = new UserEntity(dto); // 생성자 없음
             userRepository.save(userEntity);
 
         } catch (Exception exception) {
@@ -137,7 +137,7 @@ public class UserServiceImplement implements UserService {
 
             // 이거 반복문 돌려서 이름이랑 폰 번호 일치하는 사람의 이메일을 찾는 로직이 있어햐 하지 않나?
             // ==> DB 쿼리에서 WHRER 조건문 달아서 구분.
-            String currentName = userEntity.getUserName(); // Entity 에 저장된 유저의 데이터 (name)
+            String currentName = userEntity.getName(); // Entity 에 저장된 유저의 데이터 (name)
             String currentPhoneNumber = userEntity.getPhoneNumber();
 
             // 해당하는 이메일 반환.
@@ -203,7 +203,7 @@ public class UserServiceImplement implements UserService {
         String userAddress = dto.getUserPassword();
         String userProfileImageUrl = dto.getUserProfileImageUrl();
         String userGender = dto.getUserGender();
-        Date userBirthDay = dto.getUserBirhDay(); // 회원 수정할 때 성별, 생일도 수정해야하나??
+        String userBirthDay = dto.getUserBirhDay(); // 회원 수정할 때 성별, 생일도 수정해야하나??
 
         try {
             // 존재하지 않는 유저 번호 반환
@@ -218,7 +218,7 @@ public class UserServiceImplement implements UserService {
 
             userEntity.setEmail(userEmail);
             userEntity.setPassword(userPassword);
-            userEntity.setUserNickname(userNickname);
+            userEntity.setNickname(userNickname);
             userEntity.setPhoneNumber(userPhoneNumber);
             userEntity.setAddress(userAddress);
             userEntity.setProfileImageUrl(userProfileImageUrl);

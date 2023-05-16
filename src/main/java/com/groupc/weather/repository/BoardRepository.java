@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.groupc.weather.entity.BoardEntity;
 import com.groupc.weather.entity.resultSet.BoardCommentLikeyCountResultSet;
@@ -12,11 +13,12 @@ import com.groupc.weather.entity.resultSet.GetBoardListResult;
 import com.groupc.weather.entity.resultSet.HashTagResultSet;
 import com.groupc.weather.entity.resultSet.LikeyResultSet;
 
+@Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 
     public BoardEntity findByBoardNumber(int boardNumber);
 
-    public List<GetBoardListResult> findByBoardWriterNumber(Integer userNumber);
+    public List<GetBoardListResult> findByUserNumber(Integer userNumber);
 
     @Query(value =
     "SELECT " + 
@@ -149,21 +151,21 @@ public List<GetBoardListResult> getBoardListTop5();
 
 
 // 본인작성 게시물 목록 쿼리문
-@Query(value=
+// @Query(value=
 
 
-nativeQuery = true
-)
-public List<GetBoardListResult> getBoardMyList();
+// nativeQuery = true
+// )
+// public List<GetBoardListResult> getBoardMyList();
 
-//첫화면 8개게시물
-// top 5 에서 limit을 8개로 바꾸고 , 화면 첫 사진만 보고 게시물 번호만 이두개만 나타냄
-// boardNumber , boardFisrtImageUrl , Limit 8 , ORDER BY writeDateTime DESC 
-@Query(value=
+// //첫화면 8개게시물
+// // top 5 에서 limit을 8개로 바꾸고 , 화면 첫 사진만 보고 게시물 번호만 이두개만 나타냄
+// // boardNumber , boardFisrtImageUrl , Limit 8 , ORDER BY writeDateTime DESC 
+// @Query(value=
 
 
-nativeQuery = true
-)
-public List<GetBoardListResult> getBoardFirstView();
+// nativeQuery = true
+// )
+// public List<GetBoardListResult> getBoardFirstView();
 
 }

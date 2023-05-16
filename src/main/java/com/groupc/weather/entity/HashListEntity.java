@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Hashtag_Has_Board")
+@Entity(name = "HashtagHasBoard")
 @Table(name = "Hashtag_Has_Board")
 public class HashListEntity {
  
@@ -25,12 +25,12 @@ public class HashListEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int hashtagNumber;
     private int boardNumber;
-    private String hashtagContent;
-    private List<HashListEntity> hashList;
+    //private String hashtagContent;
+    //private List<HashListEntity> hashList;
   
-    HashListEntity(PostBoardRequestDto dto){
-        this.boardNumber = dto.getBoardNumber();
-    }
+    // HashListEntity(PostBoardRequestDto dto){
+    //     this.boardNumber = dto.getBoardNumber();
+    // }
     // List<HashListEntity> HashListEntitiy(PostPhotoBoardRequestDto dto){}   연구해봅시다...
     //hashList.add(hashtageContent);
 

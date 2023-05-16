@@ -103,6 +103,11 @@ public class CustomResponse {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorBody);
     }
 
+    public static ResponseEntity<ResponseDto> notExistQnaCommentNumber() {
+        
+        ResponseDto errorBody = new ResponseDto("NQC", "Not-Existent Qna Comment Number");        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody); //너가 누구인지 모른다
+    }
     public static ResponseEntity<ResponseDto> signUpFailed() {
 
         ResponseDto errorBody = new ResponseDto("SF", "Sign Up Failed");

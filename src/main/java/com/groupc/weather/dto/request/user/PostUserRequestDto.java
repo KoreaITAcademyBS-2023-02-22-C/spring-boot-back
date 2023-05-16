@@ -26,7 +26,7 @@ public class PostUserRequestDto {
     private String userEmail;
     private String userProfileImageUrl;
     @NotBlank
-    private Date userBirthday;
+    private String userBirthday;
     @NotBlank
     private String userGender;
     @NotBlank

@@ -81,7 +81,7 @@ public class QnaBoardServiceImplement implements QnaBoardService {
             if (boardNumber == null) return CustomResponse.validationError();
 
             // 존재하지 않는 게시물 번호 반환
-            QnaBoardEntity qnaBoardEntity = qnaBoardRepository.findByQnaBoardNumber(boardNumber);
+            QnaBoardEntity qnaBoardEntity = qnaBoardRepository.findByBoardNumber(boardNumber);
             if (qnaBoardEntity == null) return CustomResponse.notExistBoardNumber();
 
             int userNumber = qnaBoardEntity.getUserNumber();
@@ -129,7 +129,7 @@ public class QnaBoardServiceImplement implements QnaBoardService {
         try {
             // 존재하지 않는 게시물 번호 반환
             QnaBoardEntity qnaBoardEntity =
-                qnaBoardRepository.findByQnaBoardNumber(qnaBoardNumber);
+                qnaBoardRepository.findByBoardNumber(qnaBoardNumber);
             if (qnaBoardEntity == null) return CustomResponse.notExistBoardNumber();
 
             // 존재하지 않는 유저 번호 반환
@@ -166,20 +166,20 @@ public class QnaBoardServiceImplement implements QnaBoardService {
             if (boardNumber == null) return CustomResponse.validationError();
 
             // 존재하지 않는 게시물 번호 반환 
-            QnaBoardEntity qnaBoardEntity = qnaBoardRepository.findByQnaBoardNumber(boardNumber);
+            QnaBoardEntity qnaBoardEntity = qnaBoardRepository.findByBoardNumber(boardNumber);
             if (qnaBoardEntity == null) return CustomResponse.notExistBoardNumber();
 
             // 존재하지 않는 특정 번호(유저, 관리자) 반환 
             boolean existedUserNumber =
                 userRepository.existsByUserNumber(userNumber) ||
-                managerRepository.existsbyManagerNumber(userNumber);
+                managerRepository.existsByManagerNumber(userNumber);
             if (!existedUserNumber) return CustomResponse.notExistUserNumber();
 
             // TODO: 인증 실패
 
             // 권한 없음(작성한 유저나 관리자가 아님)
             boolean equalWriter = qnaBoardEntity.getUserNumber() == userNumber;
-            boolean isManager = managerRepository.existsbyManagerNumber(userNumber);
+            boolean isManager = managerRepository.existsByManagerNumber(userNumber);
             if (!equalWriter || !isManager) return CustomResponse.noPermissions();
 
         } catch (Exception exception) {
@@ -198,8 +198,8 @@ public class QnaBoardServiceImplement implements QnaBoardService {
         try {
             if (searchWord.isBlank()) return CustomResponse.validationError(); // 이렇게 처리하면 되는지
             
-            List<QnaBoardListResultSet> resultSet = qnaBoardRepository.getQnaBoardSearchList(searchWord);
-            body = new GetQnaBoardSearchListResponseDto(resultSet);
+            //List<QnaBoardListResultSet> resultSet = qnaBoardRepository.getQnaBoardSearchList(searchWord);
+            body = new GetQnaBoardSearchListResponseDto(null); // 이것도 해야함
             
         } catch (Exception exception) {
             exception.printStackTrace();

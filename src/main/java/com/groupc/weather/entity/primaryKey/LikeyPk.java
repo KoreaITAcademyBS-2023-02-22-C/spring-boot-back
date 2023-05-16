@@ -8,9 +8,9 @@ import lombok.Data;
 
 public class LikeyPk implements Serializable {
 
-    @Column(name = "board_number")
+    @Column(name = "boardNumber")
     private int boardNumber;
-    @Column(name = "user_email")
-    private String userEmail;
+    @Column(name = "userNumber")
+    private String userNumber;
     
 }

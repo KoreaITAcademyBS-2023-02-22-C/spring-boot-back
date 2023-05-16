@@ -2,7 +2,10 @@ package com.groupc.weather.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
+
+import com.groupc.weather.entity.primaryKey.FollowingPk;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity(name = "Following")
 @Table(name = "Following")
+@IdClass(FollowingPk.class)
 public class FollowingEntity {
 
     @Id

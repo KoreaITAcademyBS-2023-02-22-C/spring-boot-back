@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.groupc.weather.entity.QnaBoardEntity;
 import com.groupc.weather.entity.resultSet.QnaBoardListResultSet;
-
+@Repository
 public interface QnaBoardRepository extends JpaRepository<QnaBoardEntity, Integer> {
-    public boolean existsByQnaBoardNumber(int QnaboardNumber);
-    public QnaBoardEntity findByQnaBoardNumber(int qnaBoardNumber);
+    public boolean existsByBoardNumber(int QnaboardNumber);
+    public QnaBoardEntity findByBoardNumber(int qnaBoardNumber);
 
     @Query(
         value = 
@@ -33,5 +34,5 @@ public interface QnaBoardRepository extends JpaRepository<QnaBoardEntity, Intege
     public List<QnaBoardListResultSet> getQnaBoardList();
 
     // 쿼리 작성해야 함
-    public List<QnaBoardListResultSet> getQnaBoardSearchList(String searchWord);
+    //public List<QnaBoardListResultSet> getQnaBoardSearchList(String searchWord);
 }

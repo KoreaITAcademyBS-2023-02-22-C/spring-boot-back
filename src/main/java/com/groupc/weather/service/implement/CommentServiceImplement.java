@@ -109,7 +109,7 @@ public class CommentServiceImplement implements CommentService{
             //존재하지 않는 사용자 
             UserEntity existedUserNumber = userRepository.findByUserNumber(userNumber);
             if(existedUserNumber == null) return CustomResponse.notExistUserNumber();
-            boolean existedManagerNumber = managerRepository.existsbyManagerNumber(managerNumber);
+            boolean existedManagerNumber = managerRepository.existsByManagerNumber(managerNumber);
             if(!existedManagerNumber) return CustomResponse.notExistManagerNumber();
             
             commentRepository.deleteByBoardNumber(commentNumber);
