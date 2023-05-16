@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +19,10 @@ import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
 import com.groupc.weather.dto.request.user.FindByPasswordRequestDto;
 import com.groupc.weather.dto.request.user.LoginUserRequestDto;
 import com.groupc.weather.dto.request.user.PatchUserRequestDto;
-import com.groupc.weather.dto.request.user.PatchUserRequestDto2;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
+import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
 import com.groupc.weather.service.UserService;
 
@@ -71,15 +72,13 @@ public class UserController {
     // 유저 정보 수정
     @PatchMapping("")
     public ResponseEntity<ResponseDto> patchUser(
-            @AuthenticationPrincipal String userEmail,
-            @Valid @RequestBody PatchUserRequestDto2 requestBody) {
-        ResponseEntity<ResponseDto> response = userService.patchUser(userEmail, requestBody);
+            @Valid @RequestBody PatchUserRequestDto requestBody) {
+        ResponseEntity<ResponseDto> response = userService.patchUser(requestBody);
         return response;
     }
 
     // 유저 정보 삭제
     // 근재형이 하는중.
-}
 
     // 유저 정보 삭제
     @DeleteMapping("")
@@ -88,3 +87,10 @@ public class UserController {
         ResponseEntity<ResponseDto> response = userService.deleteUser(dto);
         return response;
     }
+
+    // 특정 유저 조회
+    @GetMapping("/{userNumber}")
+    public ResponseEntity<GetUserResponseDto> getUser() {
+
+    }
+}

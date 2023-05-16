@@ -1,5 +1,7 @@
 package com.groupc.weather.service.implement;
 
+import java.sql.Date;
+
 import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,6 @@ import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
 import com.groupc.weather.dto.request.user.FindByPasswordRequestDto;
 import com.groupc.weather.dto.request.user.LoginUserRequestDto;
 import com.groupc.weather.dto.request.user.PatchUserRequestDto;
-import com.groupc.weather.dto.request.user.PatchUserRequestDto2;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
@@ -193,15 +194,45 @@ public class UserServiceImplement implements UserService {
     // 유저 정보 수정
     @Override
     public ResponseEntity<ResponseDto> patchUser(PatchUserRequestDto dto) {
+
+        int userNumber = dto.getUserNumber();
         String userEmail = dto.getUserEmail();
-        PatchUserRequestDto2 dto2 = new PatchUserRequestDto2(dto);
+        String userPassword = dto.getUserPassword();
+        String userNickname = dto.getUserNickname();
+        String userPhoneNumber = dto.getUserPhoneNumber();
+        String userAddress = dto.getUserPassword();
+        String userProfileImageUrl = dto.getUserProfileImageUrl();
+        String userGender = dto.getUserGender();
+        Date userBirthDay = dto.getUserBirhDay(); // 회원 수정할 때 성별, 생일도 수정해야하나??
 
-        ResponseEntity<ResponseDto> response = patchUser(userEmail, dto2);
+        try {
+            // 존재하지 않는 유저 번호 반환
+            UserEntity userEntity = userRepository.findByUserNumber(userNumber);
+            if (userEntity == null)
+                return CustomResponse.undifindUserNumber();
 
-        return response;
+            // 권한 없음
+            boolean equalWriter = userEntity.getEmail().equals(userEmail);
+            if (!equalWriter)
+                return CustomResponse.noPermissions();
+
+            userEntity.setEmail(userEmail);
+            userEntity.setPassword(userPassword);
+            userEntity.setUserNickname(userNickname);
+            userEntity.setPhoneNumber(userPhoneNumber);
+            userEntity.setAddress(userAddress);
+            userEntity.setProfileImageUrl(userProfileImageUrl);
+            userEntity.setGender(userGender);
+            userEntity.setBirthday(userBirthDay);
+
+            userRepository.save(userEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return CustomResponse.databaseError();
+        }
+        return CustomResponse.success();
     }
-
-    // 특정 유저 조회
 
     // 유저 정보 삭제
     @Override
@@ -232,5 +263,7 @@ public class UserServiceImplement implements UserService {
 
         return CustomResponse.success();
     }
+
+    // 특정 유저 조회
 
 }
