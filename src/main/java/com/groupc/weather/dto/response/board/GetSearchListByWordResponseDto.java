@@ -14,20 +14,9 @@ public class GetSearchListByWordResponseDto extends ResponseDto {
     @NotBlank
     private String searchWord;
     private int userNumber;
-    private Temperature temperature;
-    private WeatherInfo weatherInfo;
+    // 상세검색 값(체크박스) 어떻게 가져오는지..
+    private String[] temperature = 
+        {"spring", "summer", "midsummmer", "fall", "winter", "midwinter"};
+    private String[] weatherInfo;
 
-}
-
-class Temperature {
-    boolean Spring;
-    boolean Summer;
-    boolean midSummer;
-    boolean Fall;
-    boolean Winter;
-    boolean midWinter;
-}
-
-class WeatherInfo {
-    //! 여기서부터
 }

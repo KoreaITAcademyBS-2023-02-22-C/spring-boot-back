@@ -36,11 +36,11 @@ public class QnaBoardEntity {
         Date now = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String writeDatetime = simpleDateFormat.format(now);
-
         this.userNumber = dto.getUserNumber();
         this.title = dto.getTitle();
         this.content = dto.getContent();
         this.writeDatetime = writeDatetime;
         this.imageUrl = dto.getImageUrl();
+        this.replyComplete = false;
     }
 }

@@ -29,7 +29,6 @@ class FailedAuthenticationEntiryPoint implements AuthenticationEntryPoint {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write("{\"code\": \"AF\", \"message\": \"Authentication Failed\"}");
     }
-
 }
 
 @EnableWebSecurity

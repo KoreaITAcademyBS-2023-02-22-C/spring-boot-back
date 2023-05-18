@@ -18,7 +18,6 @@ import com.groupc.weather.dto.request.qnaBoard.PostQnaBoardRequestDto;
 import com.groupc.weather.dto.ResponseDto;
 import com.groupc.weather.dto.response.qnaBoard.GetQnaBoardListResponseDto;
 import com.groupc.weather.dto.response.qnaBoard.GetQnaBoardResponseDto;
-import com.groupc.weather.dto.response.qnaBoard.GetQnaBoardSearchListResponseDto;
 import com.groupc.weather.service.QnaBoardService;
 
 @RestController
@@ -82,12 +81,12 @@ public class QnaBoardController {
     }
 
     //* 6. 특정 게시물 검색 */
-    @GetMapping("/{searchWord}")
+    @GetMapping("search/{searchWord}")
     public ResponseEntity<? super GetQnaBoardListResponseDto> searchQnaBoard(
         @PathVariable("searchWord") String searchWord
     ) {
         ResponseEntity<? super GetQnaBoardListResponseDto> response =
-            qnaBoardService.searchQnaBoardList(searchWord);
+            qnaBoardService.getSearchQnaBoardList(searchWord);
         return response;
     }
 

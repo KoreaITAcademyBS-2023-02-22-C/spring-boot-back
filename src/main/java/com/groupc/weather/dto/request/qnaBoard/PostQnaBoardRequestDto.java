@@ -1,6 +1,7 @@
 package com.groupc.weather.dto.request.qnaBoard;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PostQnaBoardRequestDto {
-    @NotBlank
+    @NotNull
     private int userNumber;
-    @NotBlank
+    @NotNull
     private String title;
-    @NotBlank
+    @NotNull
     private String content;
+
     private String imageUrl;
 }

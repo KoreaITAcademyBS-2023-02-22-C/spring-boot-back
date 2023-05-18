@@ -27,6 +27,7 @@ public class GetQnaBoardResponseDto extends ResponseDto {
     private String userNickname;
     private String userProfileImageUrl;
     private List<Comment> commentList;
+    private int commentCount;
 
     public GetQnaBoardResponseDto(
         QnaBoardEntity qnaBoardEntity, UserEntity userEntity,
@@ -42,6 +43,7 @@ public class GetQnaBoardResponseDto extends ResponseDto {
         this.userNickname = userEntity.getNickname();
         this.userProfileImageUrl = userEntity.getProfileImageUrl();
         this.commentList = Comment.createList(qnaCommentEntities);
+        this.commentCount = commentList.size();
     }
 }
 
@@ -66,8 +68,8 @@ class Comment {
         this.qnaBoardNumber = qnaCommentEntity.getQnaBoardNumber();
         this.userNumber = qnaCommentEntity.getUserNumber();
         this.managerNumber = qnaCommentEntity.getManagerNumber();
-        this.userProfileImageUrl = qnaCommentEntity.getUserImageProfileUrl();
-        this.managerProfileImageUrl = qnaCommentEntity.getManagerProfileUrl();
+        this.userProfileImageUrl = qnaCommentEntity.getUserProfileImageUrl();
+        this.managerProfileImageUrl = qnaCommentEntity.getManagerProfileImageUrl();
         this.userNickname = qnaCommentEntity.getUserNickname();
         this.managerNickname = qnaCommentEntity.getManagerNickname();
         this.content = qnaCommentEntity.getContent();

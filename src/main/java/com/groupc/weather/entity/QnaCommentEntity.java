@@ -34,8 +34,8 @@ public class QnaCommentEntity {
         private Integer managerNumber;
         private String userNickname;
         private String managerNickname;
-        private String userImageProfileUrl;
-        private String managerProfileUrl;
+        private String userProfileImageUrl;
+        private String managerProfileImageUrl;
 
 
         public QnaCommentEntity(PostQnaCommentRequestDto dto,UserDto userDto){
@@ -50,8 +50,8 @@ public class QnaCommentEntity {
         this.managerNumber=null;
         this.userNickname=userDto.getUserNickname();
         this.managerNickname=null;
-        this.userImageProfileUrl=userDto.getUserProfileImageUrl();
-        this.managerProfileUrl=null;
+        this.userProfileImageUrl=userDto.getUserProfileImageUrl();
+        this.managerProfileImageUrl=null;
         }
 
         public QnaCommentEntity(PostQnaCommentRequestDto dto,ManagerDto managerDto){
@@ -66,8 +66,8 @@ public class QnaCommentEntity {
                 this.managerNumber=dto.getWriterNumber();
                 this.userNickname=null;
                 this.managerNickname=managerDto.getManagerNickname();
-                this.userImageProfileUrl=null;
-                this.managerProfileUrl=managerDto.getManagerProfileImageUrl();
+                this.userProfileImageUrl=null;
+                this.managerProfileImageUrl=managerDto.getManagerProfileImageUrl();
                 }
         
 }

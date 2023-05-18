@@ -16,7 +16,7 @@ import com.groupc.weather.entity.resultSet.LikeyResultSet;
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 
-    public BoardEntity findByBoardNumber(int boardNumber);
+    public BoardEntity findByBoardNumber(Integer boardNumber);
 
     public List<GetBoardListResult> findByUserNumber(Integer userNumber);
 
@@ -151,21 +151,13 @@ public List<GetBoardListResult> getBoardListTop5();
 
 
 // 본인작성 게시물 목록 쿼리문
-// @Query(value=
 
-
-// nativeQuery = true
-// )
 // public List<GetBoardListResult> getBoardMyList();
 
-// //첫화면 8개게시물
-// // top 5 에서 limit을 8개로 바꾸고 , 화면 첫 사진만 보고 게시물 번호만 이두개만 나타냄
-// // boardNumber , boardFisrtImageUrl , Limit 8 , ORDER BY writeDateTime DESC 
-// @Query(value=
+//첫화면 8개게시물
+// top 5 에서 limit을 8개로 바꾸고 , 화면 첫 사진만 보고 게시물 번호만 이두개만 나타냄
+// boardNumber , boardFisrtImageUrl , Limit 8 , ORDER BY writeDateTime DESC 
 
-
-// nativeQuery = true
-// )
 // public List<GetBoardListResult> getBoardFirstView();
 
 }

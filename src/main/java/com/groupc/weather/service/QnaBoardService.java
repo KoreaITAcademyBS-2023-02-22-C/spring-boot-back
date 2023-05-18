@@ -13,12 +13,12 @@ public interface QnaBoardService {
 
     public ResponseEntity<? super GetQnaBoardResponseDto> getQnaBoard(Integer boardNumber);
     public ResponseEntity<? super GetQnaBoardListResponseDto> getQnaBoardList();
+    public ResponseEntity<? super GetQnaBoardListResponseDto> getSearchQnaBoardList(String searchWord);
 
     public ResponseEntity<ResponseDto> patchQnaBoard(PatchQnaBoardRequestDto dto);
     
     public ResponseEntity<ResponseDto> deleteQnaBoard(Integer userNumber, Integer boardNumber);
 
-    public ResponseEntity<ResponseDto> searchQnaBoardList(String searchWord);
 
 
     

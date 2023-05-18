@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.groupc.weather.dto.ResponseDto;
 import com.groupc.weather.entity.resultSet.QnaBoardListResultSet;
+import com.mysql.cj.protocol.Resultset;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,20 +39,22 @@ public class GetQnaBoardListResponseDto extends ResponseDto {
 @NoArgsConstructor
 @AllArgsConstructor
 class QnaBoardSummary {
-    public int qnaBoardNumber;
+    public Integer qnaBoardNumber;
     public String qnaBoardTitle;
     public String qnaBoardWriteDatetime;
+    public int qnaBoardWriterNumber;
     public String qnaBoardWriterNickname;
     public String qnaBoardWriterProfileImageUrl;
     public boolean replyComplete;
 
     public QnaBoardSummary(QnaBoardListResultSet resultSet) {
-        this.qnaBoardNumber = resultSet.getQnaBoardNumber();
-        this.qnaBoardTitle = resultSet.getQnaBoardTitle();
-        this.qnaBoardWriteDatetime = resultSet.getQnaBoardWriteDatetime();
-        this.qnaBoardWriterNickname = resultSet.getQnaBoardWriterNickname();
-        this.qnaBoardWriterProfileImageUrl = resultSet.getQnaBoardWriterProfileImageUrl();
-        this.replyComplete = resultSet.getReplyComplete();
+        this.qnaBoardNumber = resultSet.getBoardNumber();
+        this.qnaBoardTitle = resultSet.getBoardTitle();
+        this.qnaBoardWriteDatetime = resultSet.getBoardWriteDatetime();
+        this.qnaBoardWriterNumber = resultSet.getBoardWriterNumber();
+        this.qnaBoardWriterNickname = resultSet.getBoardWriterNickname();
+        this.qnaBoardWriterProfileImageUrl = resultSet.getBoardWriterProfileImageUrl();
+        this.replyComplete = resultSet.getReplyComplete() == 1;
     }
 }
 

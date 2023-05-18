@@ -22,9 +22,9 @@ public class PostBoardRequestDto {
     private String content;
     @NotBlank
     private String imageUrl;
-    @NotBlank
-    private List<ImageUrlList> imageUrlList;
-    private List<HashTag> hashtagList;
+    //@NotBlank
+    //private List<ImageUrlList> imageUrlList;
+    //private List<HashTag> hashtagList;
     @NotBlank
     private String weatherInfo;
     @NotBlank

@@ -17,8 +17,8 @@ public interface BoardService {
     public ResponseEntity<? super GetBoardListResponseDto> getBoardList();
     public ResponseEntity<? super GetBoardListResponseDto> getBoardTop5();
     public ResponseEntity<? super GetBoardFirstViewDto> getBoardFirstView();
-    public ResponseEntity<? super GetBoardListResponseDto> getSearchListByWord();
-    public ResponseEntity<? super GetBoardListResponseDto> getSearchListByHashtag();
+    public ResponseEntity<? super GetBoardListResponseDto> getSearchListByWord(String searchWord);
+    public ResponseEntity<? super GetBoardListResponseDto> getSearchListByHashtag(String hashtag);
     
     public ResponseEntity<ResponseDto> patchBoard(Integer userNumber, PatchBoardRequestDto dto); 
     

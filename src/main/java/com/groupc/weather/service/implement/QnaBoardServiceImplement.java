@@ -13,7 +13,6 @@ import com.groupc.weather.dto.request.qnaBoard.PatchQnaBoardRequestDto;
 import com.groupc.weather.dto.request.qnaBoard.PostQnaBoardRequestDto;
 import com.groupc.weather.dto.response.qnaBoard.GetQnaBoardListResponseDto;
 import com.groupc.weather.dto.response.qnaBoard.GetQnaBoardResponseDto;
-import com.groupc.weather.dto.response.qnaBoard.GetQnaBoardSearchListResponseDto;
 import com.groupc.weather.entity.QnaBoardEntity;
 import com.groupc.weather.entity.QnaCommentEntity;
 import com.groupc.weather.entity.UserEntity;
@@ -47,7 +46,7 @@ public class QnaBoardServiceImplement implements QnaBoardService {
     @Override
     public ResponseEntity<ResponseDto> postQnaBoard(PostQnaBoardRequestDto dto) {
         ResponseDto body = null;
-        Integer userNumber = dto.getUserNumber();
+        int userNumber = dto.getUserNumber();
 
         try {
             // 존재하지 않는 유저 번호 반환 
@@ -61,16 +60,13 @@ public class QnaBoardServiceImplement implements QnaBoardService {
 
             QnaBoardEntity qnaBoardEntity = new QnaBoardEntity(dto);
             qnaBoardRepository.save(qnaBoardEntity);
-
-            body = new ResponseDto("SU", "Success");
             
         } catch (Exception exception) {
             exception.printStackTrace();
             return CustomResponse.databaseError();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(body);
-
+        return CustomResponse.success();
     }
 
     @Override
@@ -78,6 +74,7 @@ public class QnaBoardServiceImplement implements QnaBoardService {
         GetQnaBoardResponseDto body = null;
 
         try {
+            // 매개변수 검증 작업
             if (boardNumber == null) return CustomResponse.validationError();
 
             // 존재하지 않는 게시물 번호 반환
@@ -154,7 +151,7 @@ public class QnaBoardServiceImplement implements QnaBoardService {
             return CustomResponse.databaseError();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+        return CustomResponse.success();
 
     }
 
@@ -180,32 +177,38 @@ public class QnaBoardServiceImplement implements QnaBoardService {
             // 권한 없음(작성한 유저나 관리자가 아님)
             boolean equalWriter = qnaBoardEntity.getUserNumber() == userNumber;
             boolean isManager = managerRepository.existsByManagerNumber(userNumber);
-            if (!equalWriter || !isManager) return CustomResponse.noPermissions();
+            if (!equalWriter && !isManager) return CustomResponse.noPermissions();
+
+            qnaBoardRepository.deleteByBoardNumber(boardNumber);
+            qnaCommentRepository.deleteByQnaBoardNumber(boardNumber);
 
         } catch (Exception exception) {
             exception.printStackTrace();
             return CustomResponse.databaseError();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+        return CustomResponse.success();
 
     }
 
     @Override
-    public ResponseEntity<ResponseDto> searchQnaBoardList(String searchWord) {
-        GetQnaBoardSearchListResponseDto body = null;
+    public ResponseEntity<? super GetQnaBoardListResponseDto> getSearchQnaBoardList(String searchWord) {
+        GetQnaBoardListResponseDto body = null;
 
         try {
             if (searchWord.isBlank()) return CustomResponse.validationError(); // 이렇게 처리하면 되는지
             
-            //List<QnaBoardListResultSet> resultSet = qnaBoardRepository.getQnaBoardSearchList(searchWord);
-            body = new GetQnaBoardSearchListResponseDto(null); // 이것도 해야함
+            List<QnaBoardListResultSet> resultSet = qnaBoardRepository.getQnaBoardSearchList(searchWord);
+            body = new GetQnaBoardListResponseDto(resultSet);
             
         } catch (Exception exception) {
             exception.printStackTrace();
+            return CustomResponse.databaseError();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
+
+
 
 }
