@@ -1,8 +1,7 @@
 package com.groupc.weather.service.implement;
 
-import java.sql.Date;
+import java.util.List;
 
-import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +18,22 @@ import com.groupc.weather.dto.request.user.PatchUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
+import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
+import com.groupc.weather.entity.BoardEntity;
+import com.groupc.weather.entity.CommentEntity;
+import com.groupc.weather.entity.FollowingEntity;
 import com.groupc.weather.entity.UserEntity;
 import com.groupc.weather.provider.JwtProvider;
+import com.groupc.weather.repository.BoardRepository;
+import com.groupc.weather.repository.CommentRepository;
 import com.groupc.weather.repository.UserRepository;
 import com.groupc.weather.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserServiceImplement implements UserService {
 
     private UserRepository userRepository;
@@ -70,7 +78,7 @@ public class UserServiceImplement implements UserService {
             dto.setUserPassword(encodedPassword);
 
             // 유저 레코드 삽입
-            UserEntity userEntity = new UserEntity(dto); // 생성자 없음
+            UserEntity userEntity = new UserEntity(dto);
             userRepository.save(userEntity);
 
         } catch (Exception exception) {
@@ -178,7 +186,7 @@ public class UserServiceImplement implements UserService {
             String currentEmail = userEntity.getEmail();
             String currentPoneNumber = userEntity.getPhoneNumber();
 
-            if (currentEmail == email && currentPoneNumber == phoneNumber) {
+            if (currentEmail.equals(email) && currentPoneNumber == phoneNumber) {
                 String userPassword = userEntity.getPassword();
                 body = new FindByPasswordResponseDto(userPassword);
             }
@@ -265,5 +273,56 @@ public class UserServiceImplement implements UserService {
     }
 
     // 특정 유저 조회
+    public ResponseEntity<? super GetUserResponseDto> getUser(Integer userNumber) {
+
+        GetUserResponseDto body = null;
+
+        try {
+            // 존재하지 않는 조회한 유저 반환.
+            UserEntity userEntity = userRepository.findByUserNumber(userNumber);
+            if (userEntity == null)
+                return CustomResponse.notExistUserNumber();
+
+            List<FollowerEntity> followerEntities = followerRepository.findFollowerList(userNumber);
+            List<FollowingEntity> followingEntities = followingRepository.findFollowingList(userNumber);
+            userEntity = userRepository.findByUserNumber(userNumber);
+            BoardEntity boardEntity = boardRepository.findByUserNumber(userNumber);
+            CommentEntity commentEntity = commentRepository.findByUserNumber(userNumber);
+
+            // FollowerEntity 없어서 오류 발생.
+            body = new GetUserResponseDto(userEntity, boardEntity, commentEntity, followingEntities, null);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return CustomResponse.databaseError();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(body);
+    }
+
+    // 특정 유저 팔로우
+    @Override
+    public ResponseEntity<ResponseDto> followUser(Integer followingUserNumber) {
+
+        try {
+            // 로그인 한 상태가 아닐 때 반환.????
+
+            // 존재하지 않는 팔로우하려는 유저 반환.
+            // 유저 목록에 존재하는 유저인가.
+            UserEntity userEntity = userRepository.findByUserNumber(followingUserNumber);
+            if (userEntity == null)
+                return CustomResponse.undifindUserNumber();
+
+            // 본인의 number을 팔로잉 엔티티의 followerNumber에 저장
+
+            //
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return CustomResponse.databaseError();
+        }
+    }
+
+    // 특정 유저 follow
 
 }

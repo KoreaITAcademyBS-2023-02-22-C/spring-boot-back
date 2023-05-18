@@ -1,9 +1,7 @@
 package com.groupc.weather.dto.request.user;
 
-import java.util.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PostUserRequestDto {
-    @NotBlank
-    private Integer userNumber;
     @NotBlank
     private String userName;
     @NotBlank

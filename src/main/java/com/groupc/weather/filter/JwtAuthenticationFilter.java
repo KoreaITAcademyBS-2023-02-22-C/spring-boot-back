@@ -1,5 +1,7 @@
+package com.groupc.weather.filter;
 
 import java.io.IOException;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -1,3 +1,4 @@
+package com.groupc.weather.config;
 
 import java.io.IOException;
 
@@ -16,6 +17,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import com.groupc.weather.filter.JwtAuthenticationFilter;
 
 class FailedAuthenticationEntiryPoint implements AuthenticationEntryPoint {
@@ -50,7 +52,8 @@ public class WebSecurityConfig {
                 .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
-                .antMatchers("/api/v1/**", "/api/v2/auth/**").permitAll()
+                .antMatchers("/api/**", "/api/v2/auth/**").permitAll()
+
                 .antMatchers("/api/v2/board/list", "/api/v2/board/top3").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v2/board/*").permitAll()
                 .anyRequest().authenticated().and()

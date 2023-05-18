@@ -25,4 +25,7 @@ public class FollowingEntity {
     @Id
     private int followingNumber;
 
+    public FollowingEntity(int userNumber) {
+        this.followerNumber = userNumber;
+    }
 }

@@ -1,11 +1,14 @@
 package com.groupc.weather.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.groupc.weather.dto.request.follow.FollowRequestDto;
 import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
 import com.groupc.weather.dto.request.user.LoginUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
@@ -19,9 +22,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity(name = "User")
 @Table(name = "User")
+
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userNumber;
     private String name;
     private String email;
@@ -34,7 +37,6 @@ public class UserEntity {
     private String birthday;
 
     public UserEntity(PostUserRequestDto dto) {
-        this.userNumber = dto.getUserNumber();
         this.name = dto.getUserName();
         this.nickname = dto.getUserNickname();
         this.password = dto.getUserPassword();
@@ -54,6 +56,10 @@ public class UserEntity {
     public UserEntity(FindByEmailRequestDto dto) {
         this.name = dto.getUserName();
         this.phoneNumber = dto.getUserPhoneNumber();
+    }
+
+    public UserEntity(FollowRequestDto dto) {
+        this.userNumber = dto.getUserNumber();
     }
 
 }

@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
 import com.groupc.weather.dto.ResponseDto;
+import com.groupc.weather.dto.request.follow.FollowRequestDto;
 import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
 import com.groupc.weather.dto.request.user.FindByPasswordRequestDto;
 import com.groupc.weather.dto.request.user.LoginUserRequestDto;
@@ -13,6 +14,7 @@ import com.groupc.weather.dto.request.user.PatchUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
+import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
 
 public interface UserService {
@@ -29,4 +31,8 @@ public interface UserService {
     // public ResponseEntity<ResponseDto> patchUser(String userEmail,
     // PatchUserRequestDto2 requestBody);
     public ResponseEntity<ResponseDto> deleteUser(PostUserRequestDto dto);
+
+    public ResponseEntity<? super GetUserResponseDto> getUser(Integer userNumber);
+
+    public ResponseEntity<ResponseDto> followUser(Integer followingUserNumber);
 }
