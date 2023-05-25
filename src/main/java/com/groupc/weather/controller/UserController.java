@@ -106,6 +106,8 @@ public class UserController {
     }
 
     // Follow 해제
+    @DeleteMapping("clear-follow")
+    public ResponseEntity<ResponseDto>
 
     // Top5 팔로워 조회
     @GetMapping("top5-follow")
