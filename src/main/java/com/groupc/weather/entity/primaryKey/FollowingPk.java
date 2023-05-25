@@ -10,9 +10,9 @@ import lombok.Data;
 public class FollowingPk implements Serializable {
 
     @Column(name = "followerNumber")
-    private int followerNumber;
+    private Integer followerNumber;
 
     @Column(name = "followingNumber")
-    private int followingNumber;
+    private Integer followingNumber;
 
 }

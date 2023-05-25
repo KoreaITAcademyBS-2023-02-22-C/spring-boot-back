@@ -5,27 +5,28 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+import com.groupc.weather.dto.request.follow.FollowRequestDto;
 import com.groupc.weather.entity.primaryKey.FollowingPk;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// test
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Following")
 @Table(name = "Following")
 @IdClass(FollowingPk.class)
-public class FollowingEntity {
+public class FollowEntity {
 
     @Id
-    private int followerNumber;
+    private Integer followerNumber; // 본인 넘버
     @Id
-    private int followingNumber;
+    private Integer followingNumber; // 상대 넘버
 
-    public FollowingEntity(int userNumber) {
-        this.followerNumber = userNumber;
+    public FollowEntity(FollowRequestDto dto) {
+        this.followerNumber = dto.getFollowerNumber();
+        this.followingNumber = dto.getFollowingNumber();
     }
 }

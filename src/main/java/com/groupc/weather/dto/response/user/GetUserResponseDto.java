@@ -5,7 +5,7 @@ import java.util.List;
 import com.groupc.weather.dto.ResponseDto;
 import com.groupc.weather.entity.BoardEntity;
 import com.groupc.weather.entity.CommentEntity;
-import com.groupc.weather.entity.FollowingEntity;
+import com.groupc.weather.entity.FollowEntity;
 import com.groupc.weather.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetUserResponseDto extends ResponseDto {
+    private String userName;
     private int userNumber;
     private String userNickname;
     private String userProfileImageUrl;
@@ -29,23 +30,34 @@ public class GetUserResponseDto extends ResponseDto {
     private int boardCount;
     private int commentCount;
 
+    // public GetUserResponseDto(
+    // UserEntity userEntity, BoardEntity boardEntity, CommentEntity commentEntity,
+    // List<FollowingEntity> followingEntities, List<FollowerEntity>
+    // followerEntities) {
+    // super("SU", "Success");
+
+    // this.userNumber = userEntity.getUserNumber();
+    // this.userNickname = userEntity.getNickname();
+    // this.userProfileImageUrl = userEntity.getProfileImageUrl();
+    // this.userGender = userEntity.getGender();
+    // this.boardCount = boardEntity.getViewCount();
+    // this.commentCount = commentEntity.getCommentCount();
+
+    // this.userFollowerList = Follower.createList(followerEntities);
+    // this.userFollowerCount = followerEntities.getFollowerCount();
+    // this.userFollowingList = Following.createList(followingEntities);
+    // this.userFollowingCount = followingEntities.getFollowingCount();
+    // }
+
     public GetUserResponseDto(
-            UserEntity userEntity, BoardEntity boardEntity, CommentEntity commentEntity,
-            List<FollowingEntity> followingEntities, List<FollowerEntity> followerEntities) {
+            UserEntity userEntity) {
         super("SU", "Success");
 
+        this.userName = userEntity.getName();
         this.userNumber = userEntity.getUserNumber();
         this.userNickname = userEntity.getNickname();
         this.userProfileImageUrl = userEntity.getProfileImageUrl();
         this.userGender = userEntity.getGender();
-        this.boardCount = boardEntity.getViewCount();
-        this.commentCount = commentEntity.getCommentCount();
-
-        // ================================ Follower / Following X
-        this.userFollowerList = Follower.createList(followerEntities);
-        this.userFollowerCount = followerEntities.getFollowerCount();
-        this.userFollowingList = Following.createList(followingEntities);
-        this.userFollowingCount = followingEntities.getFollowingCount();
     }
 }
 
@@ -102,7 +114,7 @@ class Following {
     private String followingNickname;
     private String followingProfileImageUrl;
 
-    Following(FollowingEntity followingEntity) {
+    Following(FollowEntity followingEntity) {
         this.followingUserNumber = followingEntity.getFollowingUserNumber();
         this.followingNickname = followingEntity.getFollowingNickname();
         this.followingProfileImageUrl = followingEntity.getFollowingProfileImageUrl();

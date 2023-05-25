@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.groupc.weather.dto.ResponseDto;
+import com.groupc.weather.dto.request.follow.FollowRequestDto;
+import com.groupc.weather.dto.request.user.DeleteUserRequestDto;
 import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
 import com.groupc.weather.dto.request.user.FindByPasswordRequestDto;
 import com.groupc.weather.dto.request.user.LoginUserRequestDto;
@@ -23,6 +25,7 @@ import com.groupc.weather.dto.request.user.PatchUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
+import com.groupc.weather.dto.response.user.GetTop5FollowerResponseDto;
 import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
 import com.groupc.weather.service.UserService;
@@ -71,7 +74,7 @@ public class UserController {
     }
 
     // 유저 정보 수정
-    @PatchMapping("")
+    @PatchMapping("user-update")
     public ResponseEntity<ResponseDto> patchUser(
             @Valid @RequestBody PatchUserRequestDto requestBody) {
         ResponseEntity<ResponseDto> response = userService.patchUser(requestBody);
@@ -79,10 +82,10 @@ public class UserController {
     }
 
     // 유저 정보 삭제
-    @DeleteMapping("")
+    @DeleteMapping("user-delete")
     public ResponseEntity<ResponseDto> deleteByUser(
-            @Valid @RequestBody @AuthenticationPrincipal Integer userNumber, PostUserRequestDto dto) {
-        ResponseEntity<ResponseDto> response = userService.deleteUser(dto);
+            @Valid @RequestBody DeleteUserRequestDto requestBody) {
+        ResponseEntity<ResponseDto> response = userService.deleteUser(requestBody);
         return response;
     }
 
@@ -95,10 +98,19 @@ public class UserController {
     }
 
     // 특정 유저 Follow
-    @PostMapping("/{followingUserNumber}")
+    @PostMapping("follow")
     public ResponseEntity<ResponseDto> followUser(
-            @PathVariable("followingUserNumber") Integer followingUserNumber) {
-        ResponseEntity<ResponseDto> response = userService.followUser(followingUserNumber);
+            @Valid @RequestBody FollowRequestDto requestBody) {
+        ResponseEntity<ResponseDto> response = userService.followUser(requestBody);
+        return response;
+    }
+
+    // Follow 해제
+
+    // Top5 팔로워 조회
+    @GetMapping("top5-follow")
+    public ResponseEntity<? super GetTop5FollowerResponseDto> followerTop5() {
+        ResponseEntity<? super GetTop5FollowerResponseDto> response = userService.getFollowerTop5();
         return response;
     }
 }

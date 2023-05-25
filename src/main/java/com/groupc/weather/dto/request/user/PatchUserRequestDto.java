@@ -30,5 +30,5 @@ public class PatchUserRequestDto {
     @NotBlank
     private String userGender;
     @NotBlank
-    private String userBirhDay;
+    private String userBirthday;
 }

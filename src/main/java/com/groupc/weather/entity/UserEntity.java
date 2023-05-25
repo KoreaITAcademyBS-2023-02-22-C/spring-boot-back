@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import com.groupc.weather.dto.request.follow.FollowRequestDto;
 import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
 import com.groupc.weather.dto.request.user.LoginUserRequestDto;
+import com.groupc.weather.dto.request.user.PatchUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 public class UserEntity {
     @Id
-    private int userNumber;
+    private Integer userNumber;
     private String name;
     private String email;
     private String password;
@@ -54,7 +55,7 @@ public class UserEntity {
         this.phoneNumber = dto.getUserPhoneNumber();
     }
 
-    public UserEntity(FollowRequestDto dto) {
+    public UserEntity(PatchUserRequestDto dto) {
         this.userNumber = dto.getUserNumber();
     }
 
