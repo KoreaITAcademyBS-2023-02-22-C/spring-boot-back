@@ -20,13 +20,17 @@ import com.groupc.weather.dto.request.user.PatchUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
+import com.groupc.weather.dto.response.user.FollowerUserResponseDto;
+import com.groupc.weather.dto.response.user.FollowingUserResponseDto;
 import com.groupc.weather.dto.response.user.GetTop5FollowerResponseDto;
 import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
 import com.groupc.weather.entity.BoardEntity;
 import com.groupc.weather.entity.CommentEntity;
-import com.groupc.weather.entity.FollowEntity;
+import com.groupc.weather.entity.FollowingEntity;
 import com.groupc.weather.entity.UserEntity;
+import com.groupc.weather.entity.resultSet.GetFollowerListResultSet;
+import com.groupc.weather.entity.resultSet.GetFollowingListResultSet;
 import com.groupc.weather.entity.resultSet.GetTop5FollowerListResult;
 import com.groupc.weather.provider.JwtProvider;
 import com.groupc.weather.repository.BoardRepository;
@@ -319,7 +323,7 @@ public class UserServiceImplement implements UserService {
                 return CustomResponse.undifindUserNumber();
 
             // follow Entity에 입력한 데이터 저장.
-            FollowEntity followEntity = new FollowEntity(dto);
+            FollowingEntity followEntity = new FollowingEntity(dto);
             followRepository.save(followEntity);
 
             responseBody = new ResponseDto("SU", "Success");
@@ -343,6 +347,57 @@ public class UserServiceImplement implements UserService {
 
             List<GetTop5FollowerListResult> resultSet = userRepository.getTop5ListBy();
             body = new GetTop5FollowerResponseDto(resultSet);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return CustomResponse.databaseError();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(body);
+    }
+
+    // 본인 follower한 유저 조회
+    @Override
+    public ResponseEntity<? super FollowerUserResponseDto> getFollowerUser(Integer followingNumber) {
+
+        FollowerUserResponseDto body = null;
+
+        try {
+
+            boolean existedFollowerNumber = userRepository.existsByUserNumber(followingNumber);
+            if (!existedFollowerNumber)
+                return CustomResponse.notExistUserNumber();
+
+            List<GetFollowerListResultSet> followerList = followRepository.getFollowerUserList(followingNumber);
+
+            body = new FollowerUserResponseDto(followerList);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return CustomResponse.databaseError();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(body);
+    }
+
+    // 본인 followeing한 유저 조회
+    @Override
+    public ResponseEntity<? super FollowingUserResponseDto> getFollowingUser(Integer followerNumber) {
+
+        FollowingUserResponseDto body = null;
+
+        try {
+            boolean existedFollowingNumber = userRepository.existsByUserNumber(followerNumber);
+            if (!existedFollowingNumber)
+                return CustomResponse.notExistUserNumber();
+            // =============================================================================================================================================
+            // List<FollowingEntity> followingNumbers =
+            // followRepository.findByFollowingNumber(followingNumber);
+            // System.out.println(followingNumbers);
+
+            // body = new FollowingUserResponseDto(followingNumbers);
+            // =============================================================================================================================================
+            List<GetFollowingListResultSet> followingResultSet = followRepository.getFollowingUserList(followerNumber);
+            System.out.println(followingResultSet);
 
         } catch (Exception exception) {
             exception.printStackTrace();

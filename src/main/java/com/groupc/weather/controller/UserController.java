@@ -25,6 +25,8 @@ import com.groupc.weather.dto.request.user.PatchUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
+import com.groupc.weather.dto.response.user.FollowerUserResponseDto;
+import com.groupc.weather.dto.response.user.FollowingUserResponseDto;
 import com.groupc.weather.dto.response.user.GetTop5FollowerResponseDto;
 import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
@@ -106,13 +108,31 @@ public class UserController {
     }
 
     // Follow 해제
-    @DeleteMapping("clear-follow")
-    public ResponseEntity<ResponseDto>
 
     // Top5 팔로워 조회
     @GetMapping("top5-follow")
     public ResponseEntity<? super GetTop5FollowerResponseDto> followerTop5() {
         ResponseEntity<? super GetTop5FollowerResponseDto> response = userService.getFollowerTop5();
+        return response;
+    }
+
+    // follower 유저 조회(나를 팔로우 한사람)
+    @GetMapping("/follower/{followerUser}")
+    public ResponseEntity<? super FollowerUserResponseDto> followerUser(
+            @PathVariable("followerUser") Integer followerUser) {
+
+        ResponseEntity<? super FollowerUserResponseDto> response = userService.getFollowerUser(followerUser);
+
+        return response;
+    }
+
+    // following 유저 조회(내가 팔로우 한사람)
+    @GetMapping("/following/{followingUser}")
+    public ResponseEntity<? super FollowingUserResponseDto> followingUser(
+            @PathVariable("followingUser") Integer followingUser) {
+
+        ResponseEntity<? super FollowingUserResponseDto> response = userService.getFollowingUser(followingUser);
+
         return response;
     }
 }

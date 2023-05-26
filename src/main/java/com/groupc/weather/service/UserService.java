@@ -13,6 +13,8 @@ import com.groupc.weather.dto.request.user.PatchUserRequestDto;
 import com.groupc.weather.dto.request.user.PostUserRequestDto;
 import com.groupc.weather.dto.response.user.FindByEmailResponseDto;
 import com.groupc.weather.dto.response.user.FindByPasswordResponseDto;
+import com.groupc.weather.dto.response.user.FollowerUserResponseDto;
+import com.groupc.weather.dto.response.user.FollowingUserResponseDto;
 import com.groupc.weather.dto.response.user.GetTop5FollowerResponseDto;
 import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
@@ -37,4 +39,8 @@ public interface UserService {
     public ResponseEntity<ResponseDto> followUser(FollowRequestDto dto);
 
     public ResponseEntity<? super GetTop5FollowerResponseDto> getFollowerTop5();
+
+    public ResponseEntity<? super FollowerUserResponseDto> getFollowerUser(Integer followerNumber);
+
+    public ResponseEntity<? super FollowingUserResponseDto> getFollowingUser(Integer followingNumber);
 }

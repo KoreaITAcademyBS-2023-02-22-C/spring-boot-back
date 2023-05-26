@@ -5,7 +5,7 @@ import java.util.List;
 import com.groupc.weather.dto.ResponseDto;
 import com.groupc.weather.entity.BoardEntity;
 import com.groupc.weather.entity.CommentEntity;
-import com.groupc.weather.entity.FollowEntity;
+import com.groupc.weather.entity.FollowingEntity;
 import com.groupc.weather.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
@@ -114,7 +114,7 @@ class Following {
     private String followingNickname;
     private String followingProfileImageUrl;
 
-    Following(FollowEntity followingEntity) {
+    Following(FollowingEntity followingEntity) {
         this.followingUserNumber = followingEntity.getFollowingUserNumber();
         this.followingNickname = followingEntity.getFollowingNickname();
         this.followingProfileImageUrl = followingEntity.getFollowingProfileImageUrl();

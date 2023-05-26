@@ -18,14 +18,14 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Following")
 @Table(name = "Following")
 @IdClass(FollowingPk.class)
-public class FollowEntity {
+public class FollowingEntity {
 
     @Id
     private Integer followerNumber; // 본인 넘버
     @Id
     private Integer followingNumber; // 상대 넘버
 
-    public FollowEntity(FollowRequestDto dto) {
+    public FollowingEntity(FollowRequestDto dto) {
         this.followerNumber = dto.getFollowerNumber();
         this.followingNumber = dto.getFollowingNumber();
     }
