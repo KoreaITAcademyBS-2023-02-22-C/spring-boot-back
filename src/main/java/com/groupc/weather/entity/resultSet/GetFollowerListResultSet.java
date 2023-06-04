@@ -6,6 +6,4 @@ public interface GetFollowerListResultSet {
     public String getUserNickname();
 
     public String getUserProfileImageUrl();
-
-    public Integer getFollowerNumber();
 }

@@ -1,5 +1,6 @@
 package com.groupc.weather.dto.response.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.groupc.weather.dto.ResponseDto;
@@ -7,6 +8,8 @@ import com.groupc.weather.entity.BoardEntity;
 import com.groupc.weather.entity.CommentEntity;
 import com.groupc.weather.entity.FollowingEntity;
 import com.groupc.weather.entity.UserEntity;
+import com.groupc.weather.entity.resultSet.GetFollowerListResultSet;
+import com.groupc.weather.entity.resultSet.GetFollowingListResultSet;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,9 +26,9 @@ public class GetUserResponseDto extends ResponseDto {
     private String userNickname;
     private String userProfileImageUrl;
     private String userGender;
-    private List<Follower> userFollowerList;
+    private List<FollowerList> userFollowerList;
     private int userFollowerCount;
-    private List<Following> userFollowingList;
+    private List<FollowingList> userFollowingList;
     private int userFollowingCount;
     private int boardCount;
     private int commentCount;
@@ -50,9 +53,27 @@ public class GetUserResponseDto extends ResponseDto {
     // }
 
     public GetUserResponseDto(
-            UserEntity userEntity) {
+            UserEntity userEntity, List<GetFollowerListResultSet> getFollowerListResultSets,
+            List<GetFollowingListResultSet> getFollowingListResultSet) {
         super("SU", "Success");
 
+        List<FollowerList> followerList = new ArrayList<>();
+        List<FollowingList> followingList = new ArrayList<>();
+
+        for (GetFollowerListResultSet ListResult : getFollowerListResultSets) {
+            FollowerList list = new FollowerList(ListResult);
+            followerList.add(list);
+        }
+
+        for (GetFollowingListResultSet ListResult : getFollowingListResultSet) {
+            FollowingList list = new FollowingList(ListResult);
+            followingList.add(list);
+        }
+
+        this.userFollowerList = followerList;
+        this.userFollowerCount = followerList.size();
+        this.userFollowingList = followingList;
+        this.userFollowingCount = followingList.size();
         this.userName = userEntity.getName();
         this.userNumber = userEntity.getUserNumber();
         this.userNickname = userEntity.getNickname();
@@ -93,15 +114,15 @@ class CommentCount {
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-class Follower {
+class FollowerList {
     private int followerUserNumber;
     private String followerNickname;
     private String followerProfileImageUrl;
 
-    Follower(FollowerEntity followerEntity) {
-        this.followerUserNumber = followerEntity.getFollowerUserNumber();
-        this.followerNickname = followerEntity.getFollowerNickname();
-        this.followerProfileImageUrl = followerEntity.getFollowerProfileImageUrl();
+    FollowerList(GetFollowerListResultSet getFollowerListResultSet) {
+        this.followerUserNumber = getFollowerListResultSet.getUserNumber();
+        this.followerNickname = getFollowerListResultSet.getUserNickname();
+        this.followerProfileImageUrl = getFollowerListResultSet.getUserProfileImageUrl();
     }
 }
 
@@ -109,14 +130,14 @@ class Follower {
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-class Following {
+class FollowingList {
     private int followingUserNumber;
     private String followingNickname;
     private String followingProfileImageUrl;
 
-    Following(FollowingEntity followingEntity) {
-        this.followingUserNumber = followingEntity.getFollowingUserNumber();
-        this.followingNickname = followingEntity.getFollowingNickname();
-        this.followingProfileImageUrl = followingEntity.getFollowingProfileImageUrl();
+    FollowingList(GetFollowingListResultSet getFollowingListResultSet) {
+        this.followingUserNumber = getFollowingListResultSet.getUserNumber();
+        this.followingNickname = getFollowingListResultSet.getUserNickname();
+        this.followingProfileImageUrl = getFollowingListResultSet.getUserProfileImageUrl();
     }
 }

@@ -16,13 +16,21 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 public class FollowingUserResponseDto extends ResponseDto {
-    private List<FollowingEntity> followingUserList;
+    private List<FollowingList> followingUserList;
+    private Integer count;
 
-    public FollowingUserResponseDto(List<FollowingEntity> getFollowingListResultSet) {
+    public FollowingUserResponseDto(List<GetFollowingListResultSet> getFollowingListResultSet) {
 
         super("SU", "Success");
 
-        this.followingUserList = getFollowingListResultSet;
+        List<FollowingList> followingList = new ArrayList<>();
+
+        for (GetFollowingListResultSet ListResult : getFollowingListResultSet) {
+            FollowingList list = new FollowingList(ListResult);
+            followingList.add(list);
+        }
+        this.followingUserList = followingList;
+        this.count = followingList.size();
     }
 
     @Getter
@@ -33,13 +41,11 @@ public class FollowingUserResponseDto extends ResponseDto {
         private Integer userNumber;
         private String nickname;
         private String profileImageUrl;
-        private int followingCount;
 
         public FollowingList(GetFollowingListResultSet getFollowingListResultSet) {
             this.userNumber = getFollowingListResultSet.getUserNumber();
             this.nickname = getFollowingListResultSet.getUserNickname();
             this.profileImageUrl = getFollowingListResultSet.getUserProfileImageUrl();
-            this.followingCount = getFollowingListResultSet.getFollowingCount();
         }
     }
 }

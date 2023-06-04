@@ -52,6 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
             securityContext.setAuthentication(authenticationToken);
             SecurityContextHolder.setContext(securityContext);
+            // radis 저장 공간??
 
         } catch (Exception exception) {
             exception.printStackTrace();

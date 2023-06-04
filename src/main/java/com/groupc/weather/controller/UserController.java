@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.groupc.weather.dto.ResponseDto;
+import com.groupc.weather.dto.request.follow.DeleteFollowRequestDto;
 import com.groupc.weather.dto.request.follow.FollowRequestDto;
 import com.groupc.weather.dto.request.user.DeleteUserRequestDto;
 import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
@@ -30,6 +31,7 @@ import com.groupc.weather.dto.response.user.FollowingUserResponseDto;
 import com.groupc.weather.dto.response.user.GetTop5FollowerResponseDto;
 import com.groupc.weather.dto.response.user.GetUserResponseDto;
 import com.groupc.weather.dto.response.user.LoginUserResponseDto;
+import com.groupc.weather.service.FollowService;
 import com.groupc.weather.service.UserService;
 
 @RestController
@@ -107,7 +109,14 @@ public class UserController {
         return response;
     }
 
-    // Follow 해제
+    // 유저 Follow 해제
+    @DeleteMapping("follow-delete")
+    public ResponseEntity<ResponseDto> deleteFollow(
+            @Valid @RequestBody DeleteFollowRequestDto requestBody) {
+        ResponseEntity<ResponseDto> response = userService.deleteFollow(requestBody);
+        return response;
+
+    }
 
     // Top5 팔로워 조회
     @GetMapping("top5-follow")

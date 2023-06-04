@@ -3,6 +3,7 @@ package com.groupc.weather.service;
 import org.springframework.http.ResponseEntity;
 
 import com.groupc.weather.dto.ResponseDto;
+import com.groupc.weather.dto.request.follow.DeleteFollowRequestDto;
 import com.groupc.weather.dto.request.follow.FollowRequestDto;
 import com.groupc.weather.dto.request.user.DeleteUserRequestDto;
 import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
@@ -37,6 +38,8 @@ public interface UserService {
     public ResponseEntity<? super GetUserResponseDto> getUser(Integer userNumber);
 
     public ResponseEntity<ResponseDto> followUser(FollowRequestDto dto);
+
+    public ResponseEntity<ResponseDto> deleteFollow(DeleteFollowRequestDto dto);
 
     public ResponseEntity<? super GetTop5FollowerResponseDto> getFollowerTop5();
 

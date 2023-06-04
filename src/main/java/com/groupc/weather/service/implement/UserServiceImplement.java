@@ -1,5 +1,6 @@
 package com.groupc.weather.service.implement;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.groupc.weather.common.util.CustomResponse;
 import com.groupc.weather.dto.ResponseDto;
+import com.groupc.weather.dto.request.follow.DeleteFollowRequestDto;
 import com.groupc.weather.dto.request.follow.FollowRequestDto;
 import com.groupc.weather.dto.request.user.DeleteUserRequestDto;
 import com.groupc.weather.dto.request.user.FindByEmailRequestDto;
@@ -277,12 +279,12 @@ public class UserServiceImplement implements UserService {
         GetUserResponseDto body = null;
 
         try {
-            // 존재하지 않는 조회하려는 유저 반환.
+            // 존재하지 않는 유저 반환.
             UserEntity userEntity = userRepository.findByUserNumber(userNumber);
             if (userEntity == null)
                 return CustomResponse.notExistUserNumber();
 
-            // 리스트 하나로 묶고 쓰자. // follow / board / comment 는 작업중이라서 나중에 테스트.
+            /// board / comment 는 아직 연결 안함.
             // List<FollowerEntity> followerEntities =
             // followerRepository.findFollowerList(userNumber);
             // List<FollowEntity> followingEntities =
@@ -290,12 +292,12 @@ public class UserServiceImplement implements UserService {
             // BoardEntity boardEntity = boardRepository.findByUserNumber(userNumber);
             // CommentEntity commentEntity = commentRepository.findByUserNumber(userNumber);
 
-            userEntity = userRepository.findByUserNumber(userNumber);
+            userEntity = userRepository.findByUserNumber(userNumber); // 이거 왜 썼지
 
-            // FollowerEntity 없어서 오류 발생.
-            // body = new GetUserResponseDto(userEntity, boardEntity, commentEntity,
-            // followingEntities, null);
-            body = new GetUserResponseDto(userEntity);
+            List<GetFollowerListResultSet> followerList = followRepository.getFollowerUserList(userNumber);
+            List<GetFollowingListResultSet> followingList = followRepository.getFollowingUserList(userNumber);
+
+            body = new GetUserResponseDto(userEntity, followerList, followingList);
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -316,8 +318,7 @@ public class UserServiceImplement implements UserService {
 
         try {
 
-            // 존재하지 않는 팔로우하려는 유저 반환.
-            // 유저 목록에 존재하는 유저인가.
+            // 존재하지 않는 유저 반환.
             UserEntity userEntity = userRepository.findByUserNumber(followingNumber);
             if (userEntity == null)
                 return CustomResponse.undifindUserNumber();
@@ -336,6 +337,25 @@ public class UserServiceImplement implements UserService {
     }
 
     // 팔로우 해제
+    @Override
+    public ResponseEntity<ResponseDto> deleteFollow(DeleteFollowRequestDto dto) {
+
+        Integer userNumber = dto.getUserNumber();
+        Integer followingUserNumber = dto.getFollowingUserNumber();
+
+        try {
+
+            // 존재하지 않는 유저 반환
+            UserEntity userEntity = userRepository.findByUserNumber(userNumber);
+            if (userEntity == null)
+                return CustomResponse.undifindUserNumber();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return CustomResponse.databaseError();
+        }
+        return CustomResponse.success();
+    }
 
     // Top5 팔로우 유저 조회
     @Override
@@ -389,15 +409,10 @@ public class UserServiceImplement implements UserService {
             boolean existedFollowingNumber = userRepository.existsByUserNumber(followerNumber);
             if (!existedFollowingNumber)
                 return CustomResponse.notExistUserNumber();
-            // =============================================================================================================================================
-            // List<FollowingEntity> followingNumbers =
-            // followRepository.findByFollowingNumber(followingNumber);
-            // System.out.println(followingNumbers);
 
-            // body = new FollowingUserResponseDto(followingNumbers);
-            // =============================================================================================================================================
-            List<GetFollowingListResultSet> followingResultSet = followRepository.getFollowingUserList(followerNumber);
-            System.out.println(followingResultSet);
+            List<GetFollowingListResultSet> followingList = followRepository.getFollowingUserList(followerNumber);
+
+            body = new FollowingUserResponseDto(followingList);
 
         } catch (Exception exception) {
             exception.printStackTrace();

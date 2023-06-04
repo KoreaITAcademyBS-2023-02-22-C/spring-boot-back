@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.groupc.weather.dto.ResponseDto;
+import com.groupc.weather.entity.FollowingEntity;
 import com.groupc.weather.entity.resultSet.GetFollowerListResultSet;
+import com.groupc.weather.repository.FollowRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FollowerUserResponseDto extends ResponseDto {
     private List<FollowerList> followerUserList;
+    private Integer count;
 
     public FollowerUserResponseDto(List<GetFollowerListResultSet> getFollowerListResultSet) {
 
@@ -28,6 +31,7 @@ public class FollowerUserResponseDto extends ResponseDto {
             followerList.add(list);
         }
         this.followerUserList = followerList;
+        this.count = followerList.size();
     }
 
     @Getter
@@ -38,13 +42,11 @@ public class FollowerUserResponseDto extends ResponseDto {
         private Integer userNumber;
         private String nickname;
         private String profileImageUrl;
-        private Integer followerNumber;
 
         public FollowerList(GetFollowerListResultSet getFollowerListResultSet) {
             this.userNumber = getFollowerListResultSet.getUserNumber();
             this.nickname = getFollowerListResultSet.getUserNickname();
             this.profileImageUrl = getFollowerListResultSet.getUserProfileImageUrl();
-            this.followerNumber = getFollowerListResultSet.getFollowerNumber();
         }
     }
 }

@@ -23,37 +23,27 @@ public interface FollowRepository extends JpaRepository<FollowingEntity, Followi
 
         public List<FollowingEntity> findByFollowingNumber(Integer followingNumber);
 
-        // 특정 유저 조회시 유저의 이름, 번호, URL, 유저에 대한 follower 카운트가 뜨는 쿼리문.
-        // @Query(value = "SELECT " +
-        // "U.user_number AS UserNumber," +
-        // "U.nickname AS UserNickname," +
-        // "U.profile_image_url AS UserProfileImageUrl, " +
-        // "count(DISTINCT F.follower_number) AS FollowerCount " +
-        // "FROM User U, Following F " +
-        // "WHERE U.user_number = F.following_number " +
-        // "AND U.user_number = :following_number " +
-        // "GROUP BY U.user_number " +
-        // "ORDER BY FollowerCount Desc ", nativeQuery = true)
+        public List<FollowingEntity> findByFollowerNumber(Integer followerNumber);
 
         @Query(value = "SELECT " +
                         "U.user_number AS UserNumber," +
                         "U.nickname AS UserNickname," +
-                        "U.profile_image_url AS UserProfileImageUrl, " +
-                        "F.follower_number AS FollowerNumber " +
-                        "FROM User U, Following F " +
-                        "WHERE U.user_number = F.following_number " +
-                        "AND U.user_number = :following_number ", nativeQuery = true)
+                        "U.profile_image_url AS UserProfileImageUrl " +
+                        "FROM User U " +
+                        "WHERE U.user_number " +
+                        "IN(SELECT follower_number " +
+                        "FROM following " +
+                        "WHERE following_number = :following_number) ", nativeQuery = true)
         public List<GetFollowerListResultSet> getFollowerUserList(@Param("following_number") Integer followingNumber);
 
         @Query(value = "SELECT " +
                         "U.user_number AS UserNumber," +
                         "U.nickname AS UserNickname," +
-                        "U.profile_image_url AS UserProfileImageUrl, " +
-                        "count(DISTINCT F.following_number) AS FolloingCount " +
-                        "FROM User U, Following F " +
-                        "WHERE U.user_number = F.follower_number " +
-                        "AND U.user_number = :follower_number " +
-                        "GROUP BY U.user_number " +
-                        "ORDER BY FolloingCount Desc ", nativeQuery = true)
+                        "U.profile_image_url AS UserProfileImageUrl " +
+                        "FROM User U " +
+                        "WHERE U.user_number " +
+                        "IN(SELECT following_number " +
+                        "FROM following " +
+                        "WHERE follower_number = :follower_number) ", nativeQuery = true)
         public List<GetFollowingListResultSet> getFollowingUserList(@Param("follower_number") Integer followerNumber);
 }
