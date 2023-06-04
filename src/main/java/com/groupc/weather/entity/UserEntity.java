@@ -39,7 +39,7 @@ public class UserEntity {
         this.password = dto.getUserPassword();
         this.email = dto.getUserEmail();
         this.profileImageUrl = dto.getUserProfileImageUrl();
-        this.birthday = dto.getUserBirthday(); // 등록시 생일은 직접 입력(선택)하는것이기 때문에 SimpleDateFormat 필요 없을듯?
+        this.birthday = dto.getUserBirthday();
         this.gender = dto.getUserGender();
         this.address = dto.getUserAddress();
         this.phoneNumber = dto.getUserPhoneNumber();
