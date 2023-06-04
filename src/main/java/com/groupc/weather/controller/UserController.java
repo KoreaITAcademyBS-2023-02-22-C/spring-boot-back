@@ -93,7 +93,7 @@ public class UserController {
         return response;
     }
 
-    // 특정 유저 조회
+    // 특정 유저 조회.
     @GetMapping("/{userNumber}")
     public ResponseEntity<? super GetUserResponseDto> getUser(
             @PathVariable("userNumber") Integer userNumber) {
